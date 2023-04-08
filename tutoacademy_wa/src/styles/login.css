@@ -1,3 +1,12 @@
+body {
+    background-image: url(../assets/background.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+  }
+
+
+
 .lg-title{
     display: grid;
     place-items: center;
