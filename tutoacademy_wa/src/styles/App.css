@@ -1,0 +1,58 @@
+.lg-title{
+    display: grid;
+    place-items: center;
+    font-family: 'Merriweather';
+    font-size: 40px;
+    color: #000000;
+    margin-top: 2em;
+    max-width: 100%;
+}
+
+.lg-upperTitle{
+    display: block;
+    text-align: center;
+    font-family: 'Roboto';
+    font-size: 20px;
+   
+}
+
+
+.lg-upperTitle img{
+    margin-left: 1cm;
+    /*transform: translate(20%,40%);*/
+    max-width: 50%;
+    height: auto;
+
+}
+
+.lg-upperTitle .lg-button {
+
+
+}
+
+
+
+.lg-button {
+  
+  
+}
+
+.lg-button:focus {
+
+}
+
+.lg-button:hover {
+
+}
+
+.lg-button:active {
+
+}
+
+button img {
+
+  }
+
+.lg-description {
+
+}
