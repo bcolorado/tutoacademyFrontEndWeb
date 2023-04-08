@@ -2,7 +2,7 @@ body {
     background-image: url(../assets/background.png);
     background-repeat: no-repeat;
     background-size: cover;
-    background-position: center;
+    background-position: cover;
   }
 
 
@@ -47,7 +47,7 @@ body {
     cursor: pointer;
     display: inline-flex;
     font-family: "Roboto";
-    height: 250%;
+    height: 80px;
     justify-content: center;
     line-height: 1;
     overflow: hidden;
@@ -64,7 +64,7 @@ body {
     will-change: box-shadow,transform;
     font-size: 30px;
     max-width: 450px;
-    width: 100%;
+    width: 1000px;
     
   }
   

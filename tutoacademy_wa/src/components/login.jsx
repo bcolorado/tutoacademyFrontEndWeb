@@ -2,10 +2,10 @@
 import '../styles/login.css'
 import logo from '../assets/logo.png'
 import googleIcon from '../assets/googleIcon.png'
-import background from '../assets/background.png'
+import { Link } from 'react-router-dom';
 
 export function Login() {
-  document.body.style.backgroundImage = background;
+
   return (
 
     <>
@@ -19,10 +19,12 @@ export function Login() {
 
       <div className='lg-title'>
         <h1>Inicio Sesión</h1>
-        <button className="lg-button">
-        <img src={googleIcon} alt='googleIcon' />
-          Iniciar sesión con &nbsp; <span style={{ color: "#F09E00" }}>Google</span></button>
-        
+          <Link to='/Home'>
+          <button className="lg-button">
+            <img src={googleIcon} alt='googleIcon' />
+              Iniciar sesión con &nbsp; <span style={{ color: "#F09E00" }}>Google</span>
+          </button>
+          </Link>
       </div>
       <div className='lg-description'>
         <p>¡Bienvenido! Me alegra que estés interesado en conocer más sobre <br />
