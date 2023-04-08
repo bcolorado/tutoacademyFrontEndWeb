@@ -1,0 +1,8 @@
+.home-sidebar{
+    display: grid;
+    margin: 0px;
+    background-color: #F09E00;
+    width: 400px;
+    height: 100vh;
+    transform: translate(-8px,-8px);
+}

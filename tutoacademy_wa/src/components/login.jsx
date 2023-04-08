@@ -5,7 +5,7 @@ import googleIcon from '../assets/googleIcon.png'
 import { Link } from 'react-router-dom';
 
 export function Login() {
-
+  document.body.style.background = `url(D:\Miguel\Arquisoft\tutoacademyFrontEndWeb\tutoacademy_wa\src\assets\background.png)`;
   return (
 
     <>
