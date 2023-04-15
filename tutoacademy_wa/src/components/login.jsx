@@ -1,22 +1,31 @@
 
 import '../styles/login.css'
 import logo from '../assets/logo.png'
+import background from '../assets/background.png'
 import googleIcon from '../assets/googleIcon.png'
 import { Link } from 'react-router-dom';
 
 export function Login() {
-  document.body.style.background = `url(D:\Miguel\Arquisoft\tutoacademyFrontEndWeb\tutoacademy_wa\src\assets\background.png)`;
+  
+  const styles = {
+    backgroundImage: `url(${background})`,
+    backgroundSize: "cover",
+    backgroundRepeat: "no-repeat",
+    backgroundPosition: "center center",
+    margin:0,
+    padding:0,
+    height:"100vh",
+    width:"100vw"
+  };
+
   return (
 
-    <>
+    <div style={styles}>
       <div className='lg-upperTitle'>
         <h2>Bienvenido a TUTO <span style={{ color: "#F09E00" }}>ACADEMY</span> </h2>
         <img src={logo} alt='logo' />
-        
-        
       </div>
-
-
+      
       <div className='lg-title'>
         <h1>Inicio Sesión</h1>
           <Link to='/Home'>
@@ -35,7 +44,7 @@ export function Login() {
         
 
       </div>
-    </>
+    </div>
 
   )
  

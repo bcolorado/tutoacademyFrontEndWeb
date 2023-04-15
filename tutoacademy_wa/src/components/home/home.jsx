@@ -1,10 +1,23 @@
-import Sidebar from './sidebar'
+
+import VerticalNav from './verticalNav'
+import HorizontalNav from './horizontalNav'
 
 
 export function Home() {
-  document.body.style.backgroundColor = "#000000";
+
+  const styles = {
+    backgroundColor:"#8080801a", 
+    height:"100vh",
+    width:"100vw"
+  };
+  
   return (
-    <Sidebar />
+  <>   
+    <div style={styles}>
+      <VerticalNav/>
+      <HorizontalNav/>
+    </div>
+  </>
   );
 }
 

@@ -1,0 +1,34 @@
+.horizontal-nav {
+    display: grid;
+    background-color: white;
+    height: 110px; /* Usamos unidades relativas para la altura */
+    border-bottom-right-radius: 20px;
+    box-shadow: rgba(45, 35, 66, 0.4) 0 1px 2px, rgba(45, 35, 66, 0.3) 0 5px 10px -3px, #D6D6E7 0 -3px 0 inset;
+    max-width: 100%; /* Limitamos el ancho máximo */
+}
+
+
+  
+.horizontal-nav img {
+    display: grid;
+    margin-top: 10px;
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    background: white;
+    border-radius: 100%;
+    overflow: hidden;
+    margin-left: calc(100vw - 80px); /* ajustar el valor de "80px" según el ancho de la imagen */
+    }
+
+    .stylesSearchbar {
+        margin-top: -65px;
+        margin-left: 20vw;
+        border-width: 1px;
+        border-style: solid;
+        border-color: black;
+        max-width: 30%;
+    };
+
+
+

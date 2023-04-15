@@ -1,9 +1,7 @@
-body {
-    background-image: url(../assets/background.png);
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: cover;
-  }
+html, body {
+  margin: 0;
+  padding: 0;
+}
 
 
 
@@ -14,29 +12,33 @@ body {
     font-size: 30px;
     color: #000000;
     max-width: 100%;
-    margin-top: 60px;
+    margin-top: 140px;
+
     
 }
 
 .lg-upperTitle{
+    position: relative;
     display: block;
     text-align: center;
     font-family: 'Roboto';
     font-size: 20px;
+    top: 50px;
+    
 }
+
 
 .lg-upperTitle-img {
     max-width: 50%;
     height: auto;
   }
 
-.lg-upperTitle .lg-button {
-    color: black;
-}
+
 
 
 
 .lg-button {
+    top:70px ;
     align-items: center;
     background-color: #FCFCFD;
     border-radius: 4px;
@@ -96,6 +98,6 @@ body {
     font-size: 30px;
     color: #000000;
     max-width: 100%;
-    margin-top: 140px;
+    margin-top: 220px;
 
 }
