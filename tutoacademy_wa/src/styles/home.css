@@ -1,6 +1,18 @@
-body {
-    background-image: url(../assets/background.png);
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
+
+  .principal{
+    background-color:#8080801a;
+    height:100vh;
+    width:100vw;
+    position: relative;
+  }
+
+  .title{
+    position:absolute;
+    left: 20vw;
+    top: 20vh;
+    font-size: large;
+  }
+
+  .title h3{
+    color: #33333381;
   }

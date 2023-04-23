@@ -4,6 +4,8 @@ import '../../styles/horizontalNav.css'
 import logo from '../../assets/logo.png'
 import SearchBar from '@mkyy/mui-search-bar';
 import Paper from "@mui/material/Paper";
+import Badge from '@mui/material/Badge';
+import NotificationsIcon from '@mui/icons-material/Notifications';
 
 function HorizontalNav() {
 
@@ -11,11 +13,10 @@ function HorizontalNav() {
   return (
     <>
         <div className='horizontal-nav'>
-            
             <img src={logo} alt="Logo" />         
             <SearchBar className='stylesSearchbar' placeholder="Buscar..." width="100%"/>
-
         </div>
+
     </>
   )
 }

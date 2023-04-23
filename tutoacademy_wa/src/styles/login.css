@@ -13,7 +13,13 @@ html, body {
     color: #000000;
     max-width: 100%;
     margin-top: 140px;
+    margin-bottom: 50px ;
 
+    
+}
+.signInButton{
+    display: grid;
+    place-items: center;
     
 }
 
@@ -28,9 +34,9 @@ html, body {
 }
 
 
-.lg-upperTitle-img {
-    max-width: 50%;
-    height: auto;
+.lg-upperTitle img {
+
+    height: 100px;
   }
 
 
@@ -45,7 +51,7 @@ html, body {
     border-width: 0;
     box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px,rgba(45, 35, 66, 0.3) 0 7px 13px -3px,#D6D6E7 0 -3px 0 inset;
     box-sizing: border-box;
-    color: #36395A;
+    color: #000000 !important;
     cursor: pointer;
     display: inline-flex;
     font-family: "Roboto";
@@ -98,6 +104,6 @@ html, body {
     font-size: 30px;
     color: #000000;
     max-width: 100%;
-    margin-top: 220px;
+    margin-top: 200px;
 
 }

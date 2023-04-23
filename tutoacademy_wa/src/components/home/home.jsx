@@ -1,22 +1,22 @@
 
 import VerticalNav from './verticalNav'
 import HorizontalNav from './horizontalNav'
-
+import '../../styles/home.css'
 
 export function Home() {
 
-  const styles = {
-    backgroundColor:"#8080801a", 
-    height:"100vh",
-    width:"100vw"
-  };
   
   return (
   <>   
-    <div style={styles}>
+    <div className='principal'>
       <VerticalNav/>
       <HorizontalNav/>
+      <div className='title'>
+        <h1>Inicio</h1>
+        <h3>Bienvenido a Tuto academy</h3>
+      </div>
     </div>
+
   </>
   );
 }
