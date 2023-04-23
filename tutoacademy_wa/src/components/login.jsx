@@ -11,9 +11,8 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 
-
-
-function Graphql1(props) {
+export function Login() {
+  const navigate = useNavigate();
 
   const [loginUser, { data, loading, error }] = useMutation(gql`
   mutation LoginUser(
@@ -44,55 +43,6 @@ function Graphql1(props) {
     }
   }
 `);
-
-
-  const { payload } = props;
-  const { email, given_name, family_name, picture } = payload;
-
-  const [googleId, setGoogleId] = useState('');
-  const [givenName, setGivenName] = useState('');
-  const [familyName, setFamilyName] = useState('');
-  const [imageUrl, setImageUrl] = useState('');
-  const [authStatus, setAuthStatus] = useState(true);
-
-  useEffect(() => {
-    setGoogleId(email);
-    setGivenName(given_name);
-    setFamilyName(family_name);
-    setImageUrl(picture);
-    handleLogin();
-  }, [email, given_name, family_name, picture]);
-
-  const navigate = useNavigate();
-  const handleLogin = async () => {
-    try {
-      const result = await loginUser({
-        variables: {
-          googleId,
-          givenName,
-          familyName,
-          email: googleId,
-          imageUrl,
-          authStatus
-        },
-      });
-      
-      console.log("Esta es la información")
-      console.log(result);
-      navigate('/home');
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
-  
-
-}
-
-
-
-
-export function Login() {
   
   const styles = {
     backgroundImage: `url(${background})`,
@@ -107,18 +57,34 @@ export function Login() {
   
   const [googleLoginResponse, setGoogleLoginResponse] = useState(null);
 
-  const responseMessage =  (res) => {
-    console.log("Login success",res)
+  const responseMessage =  async (res) => {
     const { payload } = decodeJwt(res.credential);
-    console.log("payload credential", payload);
-    setGoogleLoginResponse(payload);
+    // console.log(payload) // User login information
+    const result = await handleLogin(payload)
+    return result
 
   };
   const errorMessage = (error) => {
       console.log(error);
   };
       
-
+  const handleLogin = async (payload) => {
+    try {
+      const result = await loginUser({
+        variables: {
+          googleId:payload.email,
+          givenName:payload.given_name,
+          familyName:payload.family_name,
+          email: payload.email,
+          imageUrl:payload.picture,
+          authStatus: true
+        },
+      });
+      return result
+    } catch (e) {
+      return e
+    }
+  };
   return (
 
     <div style={styles}>
@@ -130,19 +96,15 @@ export function Login() {
       
       <div className='lg-title'>
         <h1>Inicio Sesión</h1>
-          
-          {/* <button className="lg-button" onClick={responseMessage}>
-            <img src={googleIcon} alt='googleIcon' />
-              Iniciar sesión con &nbsp; <span style={{ color: "#F09E00" }}>Google</span>
-          </button> */}
       </div>
       <div className = "signInButton">
 
-        <GoogleLogin type='standard' theme='outline' width='300px' shape='circle' text="Inicia sesión con Google" size='large' onSuccess={responseMessage} onError={errorMessage} />
+        <GoogleLogin type='standard' theme='outline' width='300px' shape='circle' text="Inicia sesión con Google" size='large' onSuccess={e => {
+          responseMessage(e);
+          navigate('/home');
+        }} onError={errorMessage} />
 
       </div>
-
-      {googleLoginResponse ? <Graphql1 payload={googleLoginResponse} /> : null}
 
       <div className='lg-description'>
         <p>¡Bienvenido! Me alegra que estés interesado en conocer más sobre <br />
