@@ -2,17 +2,15 @@
 import '../styles/login.css'
 import logo from '../assets/logo.png'
 import background from '../assets/background.png'
-import googleIcon from '../assets/googleIcon.png'
 import { GoogleLogin} from '@react-oauth/google';
 import decodeJwt from '../utilities/decodeJwt';
-import {loginController} from '../controllers/loginController'
 import {useQuery, gql, useMutation} from '@apollo/client';
-import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import { useSignIn } from 'react-auth-kit';
 
 export function Login() {
   const navigate = useNavigate();
+  const signIn = useSignIn();
 
   const [loginUser, { data, loading, error }] = useMutation(gql`
   mutation LoginUser(
@@ -55,13 +53,14 @@ export function Login() {
     width:"100vw"
   };
   
-  const [googleLoginResponse, setGoogleLoginResponse] = useState(null);
 
   const responseMessage =  async (res) => {
-    const { payload } = decodeJwt(res.credential);
+    const credential = res.credential;
+    const { payload } = decodeJwt(credential);
     // console.log(payload) // User login information
     const result = await handleLogin(payload)
-    return result
+
+    return [result,credential];
 
   };
   const errorMessage = (error) => {
@@ -99,9 +98,20 @@ export function Login() {
       </div>
       <div className = "signInButton">
 
+        
+
         <GoogleLogin type='standard' theme='outline' width='300px' shape='circle' text="Inicia sesión con Google" size='large' onSuccess={e => {
-          responseMessage(e);
-          navigate('/home');
+          responseMessage(e).then(([result, credential]) => {
+            const [msResponse,userCredential]=[result, credential];
+    
+            signIn({
+              token:userCredential,
+              expiresIn: 3600,
+              authState: msResponse.data.loginUser
+            });
+            
+            navigate('/home');
+          });
         }} onError={errorMessage} />
 
       </div>

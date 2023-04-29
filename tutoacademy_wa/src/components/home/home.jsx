@@ -2,9 +2,11 @@
 import VerticalNav from './verticalNav'
 import HorizontalNav from './horizontalNav'
 import '../../styles/home.css'
+import { useAuthUser } from 'react-auth-kit';
 
 export function Home() {
-
+  const authUser=useAuthUser();
+  const user=authUser();
   
   return (
   <>   
@@ -13,7 +15,7 @@ export function Home() {
       <HorizontalNav/>
       <div className='title'>
         <h1>Inicio</h1>
-        <h3>Bienvenido a Tuto academy</h3>
+        <h3>Bienvenido {user && user.givenName ? user.givenName : ''} a Tuto academy</h3>
       </div>
     </div>
 
