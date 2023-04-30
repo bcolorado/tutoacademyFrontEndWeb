@@ -8,6 +8,7 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import logo from '../../assets/logo.png'
 import '../../styles/verticalNav.css'
 import { useAuthUser, useSignOut } from 'react-auth-kit';
+import 'animate.css';
 
 function verticalNav() {
   const signOut=useSignOut();
@@ -22,7 +23,7 @@ function verticalNav() {
 
         <div>
           <NavLink  className="logo">
-            <img src={user.imageUrl} alt="Logo" />
+            <img  src={user.imageUrl} alt="Logo" />
           </NavLink>
 
           <NavLink to="/home" className="nav-link">
@@ -35,7 +36,7 @@ function verticalNav() {
             <span>Perfil</span>
           </NavLink>
 
-          <NavLink  className="nav-link">
+          <NavLink to="/calendar" className="nav-link">
             <EventNoteIcon fontSize="large"/>
             <span>Mis tutorias</span>
           </NavLink>

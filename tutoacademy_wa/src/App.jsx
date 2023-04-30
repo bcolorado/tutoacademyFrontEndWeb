@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Login } from "./components/login";
 import { Home } from "./components/home/home.jsx";
+import {Calendar} from "./components/home/calendar"
 import { RequireAuth } from "react-auth-kit";
 
 
@@ -17,6 +18,11 @@ function App() {
         <Route exact path="/home" element={<RequireAuth loginPath="/">
             <Home />
           </RequireAuth>} />
+
+        <Route exact path="/calendar" element={<RequireAuth loginPath="/">
+          <Calendar />
+        </RequireAuth>} />       
+        
       </Routes>
 
 
