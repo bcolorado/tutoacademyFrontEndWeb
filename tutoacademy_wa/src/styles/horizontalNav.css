@@ -12,13 +12,12 @@
 .horizontal-nav img {
     display: grid;
     margin-top: 10px;
-    width: 80px;
-    height: 80px;
+    width: 90px;
+    height: 90px;
     object-fit: cover;
     background: white;
-    border-radius: 100%;
     overflow: hidden;
-    margin-left: calc(100vw - 80px); /* ajustar el valor de "80px" según el ancho de la imagen */
+    margin-left: calc(100vw - 120px); /* ajustar el valor de "80px" según el ancho de la imagen */
     }
 
     .stylesSearchbar {

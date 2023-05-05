@@ -7,7 +7,7 @@ import { AuthProvider } from 'react-auth-kit';
 
 const client = new ApolloClient({
     
-    uri : 'http://localhost:4000/graphql',
+    uri : 'http://host.docker.internal:4000/graphql',
     cache: new InMemoryCache(),
 
   })
@@ -18,7 +18,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
 
         <ApolloProvider client={client}>
 
-            <GoogleOAuthProvider clientId="830084715628-r33sl239q6ssf3mqo7emvirn8jfh5sje.apps.googleusercontent.com">  
+            <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>  
                 <App />
             </GoogleOAuthProvider>
 

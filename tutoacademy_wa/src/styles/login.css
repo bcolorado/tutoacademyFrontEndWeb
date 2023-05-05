@@ -1,6 +1,21 @@
+
+
 html, body {
   margin: 0;
   padding: 0;
+}
+
+
+.main{
+  background-image: url('../assets/background.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  width: 100vw;
+
 }
 
 
@@ -8,8 +23,8 @@ html, body {
 .lg-title{
     display: grid;
     place-items: center;
-    font-family: 'Merriweather';
-    font-size: 30px;
+    font-family: 'Roboto';
+    font-size: 25px;
     color: #000000;
     max-width: 100%;
     margin-top: 140px;
@@ -36,7 +51,7 @@ html, body {
 
 .lg-upperTitle img {
 
-    height: 100px;
+    height: 150px;
   }
 
 
