@@ -30,7 +30,7 @@ function verticalNav() {
       <nav className='navbar'>
 
         <div>
-          <NavLink  className="logo">
+          <NavLink to={profileURL}  className="logo">
             <img  src={user.imageUrl} alt="Logo" referrerPolicy="no-referrer" />
           </NavLink>
 
