@@ -5,9 +5,12 @@ import { GoogleOAuthProvider } from '@react-oauth/google';
 import { ApolloProvider, ApolloClient, InMemoryCache } from "@apollo/client";
 import { AuthProvider } from 'react-auth-kit';
 
+
+
+
 const client = new ApolloClient({
     
-    uri : 'http://host.docker.internal:4000/graphql',
+    uri : import.meta.env.VITE_URI_GRAPHQL,
     cache: new InMemoryCache(),
 
   })
@@ -25,4 +28,5 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         </ApolloProvider>
 
     </AuthProvider>
+
 )

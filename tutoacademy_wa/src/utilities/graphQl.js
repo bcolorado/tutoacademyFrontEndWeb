@@ -28,4 +28,34 @@ mutation LoginUser(
     updatedAt
   }
 }
-`
+`;
+
+export const GET_PROFILE_QUERY =gql`
+  query GetProfile($id: String!) {
+    getProfile(id: $id) {
+      userID {
+        _id
+        googleId
+      }
+      fullname
+      gender
+      birthdate
+      nationality
+      degree
+      description
+      creationdate
+      profilestatus
+      skills {
+        skillname
+        score
+      }
+      schedule {
+        day
+        hours
+      }
+    }
+  }
+`;
+
+
+export const TEST="Hola baby ";

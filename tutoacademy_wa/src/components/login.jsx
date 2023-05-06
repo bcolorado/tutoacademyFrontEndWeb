@@ -8,21 +8,21 @@ import { useNavigate } from 'react-router-dom';
 import { useSignIn } from 'react-auth-kit';
 import { SIGNUP_MUTATION } from '../utilities/graphql';
 
+
 export function Login() {
 
+  //Call navigate and SignIn hook
   const navigate = useNavigate();
   const signIn = useSignIn();
 
-
-
+  //Declare the mutation that registers the Google account that is logging into the app
   const [loginUser, { data, loading, error }] = useMutation(SIGNUP_MUTATION);
   
-
+  //Successful response function to the request made to Google services
   const responseMessage =  async (res) => {
     const credential = res.credential;
     const { payload } = decodeJwt(credential);
-    console.log(res);
-    console.log(payload);
+
     // console.log(payload) // User login information
     const result = await handleLogin(payload)
 
@@ -32,7 +32,8 @@ export function Login() {
   const errorMessage = (error) => {
       console.log(error);
   };
-      
+
+  //use the mutation    
   const handleLogin = async (payload) => {
     try {
       const result = await loginUser({
@@ -71,7 +72,7 @@ export function Login() {
           responseMessage(e).then(([result, credential]) => {
             const [msResponse,userCredential]=[result, credential];
             signIn({token:userCredential, expiresIn: 3600, authState: msResponse.data.loginUser});
-
+            //console.log(msResponse)   Auth ms response 
             navigate('/home');
           });
         }} onError={errorMessage} />
@@ -88,7 +89,6 @@ export function Login() {
   )
  
 }
-
 export default Login;
 
 
