@@ -59,6 +59,7 @@ export function Login() {
 
   //use the mutation    
   const handleLogin = async (payload) => {
+    if (!payload.family_name){payload.family_name = " "}
     try {
       const result = await loginUser({
         variables: {
