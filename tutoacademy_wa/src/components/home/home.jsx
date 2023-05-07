@@ -5,7 +5,7 @@ import '../../styles/home.css'
 import { useAuthUser } from 'react-auth-kit';
 import 'animate.css';
 import {Calendar} from "./calendar"
-import { GET_PROFILE_QUERY  } from '../../utilities/graphql';
+import { GET_PROFILE_QUERY  } from '../../utilities/graphQl';
 import {useQuery, useMutation,gql} from '@apollo/client';
 import { Link } from 'react-router-dom';
 

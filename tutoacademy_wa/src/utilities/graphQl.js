@@ -36,6 +36,47 @@ export const GET_PROFILE_QUERY =gql`
       userID {
         _id
         googleId
+        givenName
+        familyName
+        email
+        imageUrl
+        authStatus
+        createdAt
+        updatedAt
+      }
+      fullname
+      gender
+      birthdate
+      nationality
+      degree
+      description
+      creationdate
+      profilestatus
+      skills {
+        skillname
+        score
+      }
+      schedule {
+        day
+        hours
+      }
+    }
+  }
+`;
+
+export const FIND_PROFILE_QUERY =gql`
+  query FindProfiles($value: String!) {
+    findProfiles(value: $value) {
+      userID {
+        _id
+        googleId
+        givenName
+        familyName
+        email
+        imageUrl
+        authStatus
+        createdAt
+        updatedAt
       }
       fullname
       gender

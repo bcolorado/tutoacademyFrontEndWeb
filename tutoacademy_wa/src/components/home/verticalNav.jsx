@@ -5,7 +5,7 @@ import '../../styles/verticalNav.css'
 import { useAuthUser, useSignOut } from 'react-auth-kit';
 import 'animate.css';
 import {useQuery} from '@apollo/client';
-import { GET_PROFILE_QUERY  } from '../../utilities/graphql';
+import { GET_PROFILE_QUERY  } from '../../utilities/graphQl';
 
 function verticalNav() {
 

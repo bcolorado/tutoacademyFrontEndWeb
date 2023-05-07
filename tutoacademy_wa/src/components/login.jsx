@@ -6,7 +6,7 @@ import decodeJwt from '../utilities/decodeJwt';
 import {useQuery, useMutation} from '@apollo/client';
 import { useNavigate } from 'react-router-dom';
 import { useSignIn } from 'react-auth-kit';
-import { SIGNUP_MUTATION } from '../utilities/graphql';
+import { SIGNUP_MUTATION } from '../utilities/graphQl';
 import googleIcon from '../assets/googleIcon.png'
 import axios from 'axios';
 import { useState,useEffect } from 'react';
