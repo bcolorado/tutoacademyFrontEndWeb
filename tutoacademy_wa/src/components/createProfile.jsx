@@ -18,6 +18,7 @@ import { Link } from 'react-router-dom';
 import { CREATE_PROFILE_MUTATION ,TEST} from '../utilities/graphQl';
 import {useMutation} from '@apollo/client';
 import { useAuthUser } from 'react-auth-kit';
+import { useNavigate } from 'react-router-dom';
 
 const theme = createTheme();
 
@@ -26,6 +27,7 @@ const theme = createTheme();
 export function CreateProfile() {
 
   const authUser=useAuthUser();
+  const navigate = useNavigate();
   const user=authUser();
 
   const [createProfile, { data, loading, error }] = useMutation(CREATE_PROFILE_MUTATION);
@@ -44,6 +46,8 @@ export function CreateProfile() {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const result = handleCreateProfile(data);
+    console.log(result);
+    navigate('/home');
 
   };
 
@@ -60,7 +64,7 @@ export function CreateProfile() {
           nationality: formData.get('country'),
           degree: formData.get('degree'),
           description: formData.get('description'),
-          creationdate: formData.get('birthday'),
+          creationdate: isoDateString,
           profilestatus: true,
           skills: null,
           schedule: null
@@ -155,7 +159,7 @@ export function CreateProfile() {
                     >
                     <MenuItem value={"male"}>Masculino</MenuItem>
                     <MenuItem value={"female"}>Femenino</MenuItem>
-                    <MenuItem value={"Other"}>Otro</MenuItem>
+                    <MenuItem value={"other"}>Otro</MenuItem>
                 </Select>
               </Grid>
 
