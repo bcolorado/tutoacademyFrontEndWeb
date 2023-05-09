@@ -4,8 +4,6 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import PersonPinIcon from '@mui/icons-material/PersonPin';
@@ -17,6 +15,9 @@ import MenuItem from '@mui/material/MenuItem';
 import { CountryDropdown, RegionDropdown } from 'react-country-region-selector';
 import InputLabel from '@mui/material/InputLabel';
 import { Link } from 'react-router-dom';
+import { CREATE_PROFILE_MUTATION ,TEST} from '../utilities/graphQl';
+import {useMutation} from '@apollo/client';
+import { useAuthUser } from 'react-auth-kit';
 
 const theme = createTheme();
 
@@ -24,20 +25,52 @@ const theme = createTheme();
 
 export function CreateProfile() {
 
+  const authUser=useAuthUser();
+  const user=authUser();
+
+  const [createProfile, { data, loading, error }] = useMutation(CREATE_PROFILE_MUTATION);
+
   const [country, setCountry] = React.useState('');
   const [gender, setGender] = React.useState('');
   const [degree, setDegree] = React.useState('');
+  
+  const date = new Date();
+
+  
 
 
   const handleSubmit = (event) => {
+    console.log(TEST);
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      name: data.get('name'),
-    });
+    const result = handleCreateProfile(data);
+
   };
 
+  const handleCreateProfile = (formData) => {
+    try {
+      const isoDateString = date.toISOString();
+      const fullname= formData.get('name')+ ' ' +formData.get('lastName');
+      const result = createProfile({
+        variables: {
+          userID: user.email,
+          fullname: fullname,
+          gender: formData.get('gender'),
+          birthdate: formData.get('birthday'),
+          nationality: formData.get('country'),
+          degree: formData.get('degree'),
+          description: formData.get('description'),
+          creationdate: formData.get('birthday'),
+          profilestatus: true,
+          skills: null,
+          schedule: null
+        }
+      });
+      return result
+    } catch (e) {
+      return e
+    }
+  };
 
 
   const handleChange = (event) => {
@@ -67,17 +100,16 @@ export function CreateProfile() {
           <Typography component="h1" variant="h5">
             Crear perfil
           </Typography>
-          <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+          <Box component="form" onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={3}>
               <Grid item xs={12} sm={6}>
                 <TextField
-                  autoComplete="given-name"
                   name="name"
                   required
                   fullWidth
                   id="name"
                   label="Nombre"
-                  autoFocus
+                  type='text'
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -111,10 +143,12 @@ export function CreateProfile() {
               </Grid>
 
               <Grid item xs={12}>
-                <InputLabel id="genrer">Genero</InputLabel>
+                <InputLabel id="genrer">Genero*</InputLabel>
                 <Select
+                    required
                     labelId='genrer'
                     id="gender"
+                    name='gender'
                     value={gender}
                     onChange={handleChange}
                     sx={{ minWidth: 300 }}
@@ -127,14 +161,16 @@ export function CreateProfile() {
 
               
             <Grid item xs={12}>
-                <label className='calendarLabel'>Fecha de nacimiento: </label>
-                <input className='calendar' type="date" />
+                <label className='calendarLabel'>Fecha de nacimiento* </label>
+                <input name='birthday' required className='calendar' type="date" />
                 
             </Grid>
 
             <Grid sx={{mt:1}} item xs={12}>
 
               <CountryDropdown
+                name='country'
+                required
                 classes='country-selector'
                 defaultOptionLabel='Selecciona un país *'
                 value={country}
@@ -144,9 +180,11 @@ export function CreateProfile() {
 
 
             <Grid sx={{mt:2}} item xs={12}>
-                <InputLabel id="degree">Grado</InputLabel>
+                <InputLabel id="degree">Grado*</InputLabel>
                 <Select
+                    required
                     labelId='degree'
+                    name='degree'
                     id="degree"
                     value={degree}
                     onChange={handleChangeDegree}
@@ -168,8 +206,8 @@ export function CreateProfile() {
               type="submit"
               fullWidth
               variant="contained"
-              sx={{ mt: 5, mb: 2 }}
-              style={{ backgroundColor: "#F09E00", color: "black" }}
+              sx={{ mt: 5, mb: 2, fontSize: "16px" }}
+              style={{ backgroundColor: "#F09E00", color: "white" }}
             >
               Crear perfil
             </Button>
@@ -177,10 +215,9 @@ export function CreateProfile() {
             <div style={{textAlign: "center"}}>
               <Link to="/home"> 
                   <Button
-                    type="submit"
                     variant="contained"
-                    sx={{ mb: 2, width:"200px", alignItems:"center" }}
-                    style={{ backgroundColor: "#F09E00", color: "black" }}
+                    sx={{ mb: 2, width:"200px", alignItems:"center",fontSize: "16px" }}
+                    style={{ backgroundColor: "#F09E00", color: "white" }}
                   >
                     Atrás
                   </Button>

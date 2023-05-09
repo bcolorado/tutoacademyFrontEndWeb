@@ -2,7 +2,6 @@
 import '../styles/login.css'
 import logo from '../assets/logo.png'
 import { GoogleLogin, useGoogleLogin} from '@react-oauth/google';
-import decodeJwt from '../utilities/decodeJwt';
 import {useQuery, useMutation} from '@apollo/client';
 import { useNavigate } from 'react-router-dom';
 import { useSignIn } from 'react-auth-kit';

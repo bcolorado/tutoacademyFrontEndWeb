@@ -98,5 +98,35 @@ export const FIND_PROFILE_QUERY =gql`
   }
 `;
 
+export const CREATE_PROFILE_MUTATION = gql`
+mutation CreateProfile(
+  $userID: String!,
+  $fullname: String!,
+  $gender: String!,
+  $birthdate: String!,
+  $nationality: String!,
+  $degree: String!,
+  $description: String!,
+  $creationdate: String!,
+  $profilestatus: Boolean!,
+  $skills: [skillsSchemaInput],
+  $schedule: [scheduleSchemaInput]
+) {
+  createProfile(profile: {
+    userID: $userID,
+    fullname: $fullname,
+    gender:  $gender,
+    birthdate: $birthdate,
+    nationality: $nationality,
+    degree: $degree,
+    description: $description,
+    creationdate: $creationdate,
+    profilestatus: $profilestatus,
+    skills: $skills,
+    schedule: $schedule
+  })
+}
+`;
+
 
 export const TEST="Hola baby ";
