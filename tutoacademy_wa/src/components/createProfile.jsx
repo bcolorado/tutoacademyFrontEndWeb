@@ -35,6 +35,7 @@ export function CreateProfile() {
   const [country, setCountry] = React.useState('');
   const [gender, setGender] = React.useState('');
   const [degree, setDegree] = React.useState('');
+  const [success, setSuccess] = React.useState(false);
   
   const date = new Date();
 
@@ -42,12 +43,11 @@ export function CreateProfile() {
 
 
   const handleSubmit = (event) => {
-    console.log(TEST);
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const result = handleCreateProfile(data);
-    console.log(result);
     navigate('/home');
+    // setSuccess(true);
 
   };
 
@@ -57,7 +57,7 @@ export function CreateProfile() {
       const fullname= formData.get('name')+ ' ' +formData.get('lastName');
       const result = createProfile({
         variables: {
-          userID: user.email,
+          userID: user.googleId,
           fullname: fullname,
           gender: formData.get('gender'),
           birthdate: formData.get('birthday'),
@@ -212,6 +212,7 @@ export function CreateProfile() {
               variant="contained"
               sx={{ mt: 5, mb: 2, fontSize: "16px" }}
               style={{ backgroundColor: "#F09E00", color: "white" }}
+              disabled={success}
             >
               Crear perfil
             </Button>
@@ -233,6 +234,22 @@ export function CreateProfile() {
           </Box>
         </Box>
       </Container>
+
+      {/* {
+        success===true ? <Link to="/home">
+                            <Container sx={{ position: "absolute", left: "65vw", bottom: "40vh", width: "fit-content", display: "flex", justifyContent: "center", flexDirection: 'column', alignItems:'center' }}>
+                              <Button
+                                variant="text"
+                                sx={{width:"225px", alignItems:"center",fontSize: "16px", height:"70px"}}
+                                style={{ backgroundColor: "#F09E00", color: "white" }}
+                                disabled={true}
+                              >
+                                Volver a inicio
+                              </Button>
+                              <Typography variant='h6' sx={{ color: '#4CAF50' }}> Cuenta creada exitosamente</Typography>
+                            </Container>
+                          </Link> :<></>
+      } */}
     </ThemeProvider>
     </div>
   );

@@ -8,6 +8,7 @@ import {Calendar} from "./calendar"
 import { GET_PROFILE_QUERY  } from '../../utilities/graphQl';
 import {useQuery, useMutation,gql} from '@apollo/client';
 import { Link } from 'react-router-dom';
+import { useEffect } from 'react';
 
 export function Home() {
 
@@ -17,11 +18,12 @@ export function Home() {
 
   //Calling the query to verify if the profile is created
   const { data, loading, error } = useQuery(GET_PROFILE_QUERY, {
-    variables: { id: user.email },
+    variables: { id: user.googleId },
   });
 
+
   if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error :(</p>;
+  if (error) return <p>Error :</p>;
 
   console.log(data.getProfile);
   if(data.getProfile){

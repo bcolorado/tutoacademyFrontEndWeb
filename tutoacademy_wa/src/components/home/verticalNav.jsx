@@ -18,12 +18,16 @@ function verticalNav() {
 
   //Calling the query to verify if the profile is created
   const { data, loading, error } = useQuery(GET_PROFILE_QUERY, {
-    variables: { id: user.email },
+    variables: { id: user.googleId },
   });
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error :</p>;
+
 
 
   let profileURL="";
-  data?.getProfile===null ? profileURL="/createProfile":profileURL="/profile"
+  data?.getProfile===null ? profileURL="/createProfile":profileURL=`/profile/${user?.googleId}`
 
   return (
     <>

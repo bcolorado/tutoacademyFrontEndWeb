@@ -19,7 +19,7 @@ function App() {
             <Home />
           </RequireAuth>} />
 
-        <Route exact path="/profile" element={<RequireAuth loginPath="/">
+        <Route exact path="/profile/:id" element={<RequireAuth loginPath="/">
           <Profile />
         </RequireAuth>} />       
 
