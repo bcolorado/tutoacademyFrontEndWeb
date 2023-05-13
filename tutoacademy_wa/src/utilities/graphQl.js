@@ -129,4 +129,30 @@ mutation CreateProfile(
 `;
 
 
+export const GET_ALLSERVICES_QUERY = gql`
+  {
+    allServices {
+      idService
+      idProfile {
+        userID {
+          googleId
+
+        }
+    
+        fullname
+        gender
+        birthdate
+        nationality
+        degree
+        description
+        creationdate
+        profilestatus
+      }
+      description
+      serviceState
+    }
+  }
+`;
+
+
 export const TEST="Hola baby ";

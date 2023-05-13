@@ -53,7 +53,7 @@ function verticalNav() {
             <span>Mis tutorias</span>
           </NavLink>
 
-          <NavLink  className="nav-link">
+          <NavLink  to='/chats' className="nav-link">
             <Chat fontSize="large"/>
             <span>Chats</span>
           </NavLink>

@@ -18,6 +18,7 @@ import DescriptionIcon from '@mui/icons-material/Description';
 import FlagCircleIcon from '@mui/icons-material/FlagCircle';
 import GradeIcon from '@mui/icons-material/Grade';
 import EmailIcon from '@mui/icons-material/Email';
+import {GET_ALLSERVICES_QUERY} from '../utilities/graphQl';
 
 const mdTheme = createTheme();
 
@@ -30,13 +31,38 @@ export function Profile() {
 
     //Calling the query to verify if the profile is created
     const { data, loading, error } = useQuery(GET_PROFILE_QUERY, {
-    variables: { id: id },
+      variables: { id: id },
     });
+  
+    //Calling the query to verify if the profile is created
+    // const { data: data2, loading: loading2, error: error2 } = useQuery(
+    //   GET_ALLSERVICES_QUERY
+    // );
+  
+    // if (loading || loading2) return <p>Loading...</p>;
+    // if (error || error2) return <p>Error :</p>;
 
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error :</p>;
+
     
-    
+    // Check if the current profile have a service
+    // let found = false;
+    // data2.allServices.map((item) => {
+    //   if (item.serviceState==true) {
+    //     if (item.idProfile.userID.googleId === data.getProfile.userID.googleId) {
+    //       console.log(`Encontrado: ${item.idService}`);
+    //       found = true;
+    //     }
+
+    //   }
+    // });
+
+    // if (!found) {
+    //   console.log('Este perfil no cuenta con un servicio');
+    // }
+
+    // console.log(data2.allServices);
     console.log(data.getProfile);
 
   return (
