@@ -163,18 +163,24 @@ export const GET_CHAT_USER = gql`
         fullname
         userID {
           googleId
+          imageUrl
         }
       }
       receiver {
         fullname
         userID {
           googleId
+          imageUrl
         }
       }
       messages {
         messageId
         sender {
           fullname
+          userID {
+            googleId
+            imageUrl
+          }
         }
         body
         sendTime

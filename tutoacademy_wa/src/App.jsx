@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Login } from "./components/login";
 import { Home } from "./components/home/home.jsx";
 import {Profile} from "./components/profile"
-import {Chat} from './components/chat';
+import {Chat} from './components/chat/chat';
 import { CreateProfile } from "./components/createProfile";
 import { RequireAuth } from "react-auth-kit";
 
