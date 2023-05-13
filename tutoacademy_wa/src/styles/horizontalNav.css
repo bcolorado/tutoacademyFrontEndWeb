@@ -7,7 +7,15 @@
     max-width: 100%; /* Limitamos el ancho máximo */
 }
 
-
+.search-results {
+    position: absolute;
+    margin-top: -28px;
+    margin-left: 20vw;
+    z-index: 999;
+    background-color: white;
+    border: 1px solid grey;
+    max-width: 70%;
+  }
   
 .horizontal-nav img {
     display: grid;
