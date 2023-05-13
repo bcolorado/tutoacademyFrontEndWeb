@@ -191,4 +191,19 @@ export const GET_CHAT_USER = gql`
   }
 `;
 
+export const ADDMESSAGE_CHAT_USER = gql`
+mutation AddMessage(
+  $sender: String!,
+  $receiver: String!,
+  $messages: [messageSchemaInput]!,
+)
+{
+  addMessage(chat: {
+    sender: $sender,
+    receiver: $receiver,
+    messages:  $messages
+  })
+}
+`;
+
 export const TEST="Hola baby ";

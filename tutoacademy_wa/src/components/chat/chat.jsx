@@ -21,6 +21,9 @@ import { useQuery } from '@apollo/client';
 import { ProfilesChat } from './profiles';
 import { MsgProfile } from './messages';
 import { useState } from 'react';
+import { ADDMESSAGE_CHAT_USER } from '../../utilities/graphQl';
+import {useMutation} from '@apollo/client';
+
 const useStyles = makeStyles({
 
   chatSection: {
@@ -43,16 +46,45 @@ const useStyles = makeStyles({
 
 
 export function Chat()  {
+  const authUser=useAuthUser();
+  const user=authUser();
+  const [AddMessage, { data1, loading1, error1 }] = useMutation(ADDMESSAGE_CHAT_USER);
   const classes = useStyles();
 
   const [selectedProfile, setSelectedProfile] = useState(null);
   const handleProfileClick = (profile) => {
     setSelectedProfile(profile)
-    console.log(profile)
+    // console.log(profile)
   };
 
-  const authUser=useAuthUser();
-  const user=authUser();
+  const handleSend = async (msg) => {
+    if(msg == ""){return}
+    // console.log(msg)
+    let receiver = ""
+    if (selectedProfile.receiver.userID.googleId == user.googleId){receiver = selectedProfile.sender.userID.googleId}
+    else{ receiver = selectedProfile.receiver.userID.googleId}
+    // console.log(receiver)
+    let msgF = [{
+        sender: user.googleId,
+        body: msg
+    }]
+    // console.log(msgF)
+    try{
+      const result = await AddMessage({
+        variables: {
+          sender: user.googleId,
+          receiver: receiver,
+          messages: msgF
+        }
+      });
+      console.log(result)
+      setMessageText("")
+    } catch (e) {
+      console.log(e)
+    }
+  };
+
+  const [messageText, setMessageText] = useState("");
   
   const { data, loading, error } = useQuery(GET_PROFILE_QUERY, {
       variables: { id: user.googleId },
@@ -86,26 +118,34 @@ export function Chat()  {
                 <Divider /><Divider />
 
                 <List>
-                  {data2?.getChatUser.map((data) => (
-                    <ProfilesChat data={data} key={data.receiver.userID.googleId} onClick={handleProfileClick} />
-                  ))}
+                  {data2?.getChatUser.map((data) => {
+                      if (data.receiver.userID.googleId == user.googleId){return (<ProfilesChat data={data} key={data.sender.userID.googleId} onClick={handleProfileClick} />)}
+                      else {return (<ProfilesChat data={data} key={data.receiver.userID.googleId} onClick={handleProfileClick} />)}
+                  }
+                  )}
                 </List>
                 
             </Grid>
             <Grid item xs={9}>
-              <MsgProfile data={selectedProfile?.messages || []} />  {/* Aquí se deberia poder editar que chat ver segun donde se haga click*/} 
+              <MsgProfile data={selectedProfile?.messages || []} /> 
                 <Divider />
                 {selectedProfile ? (
           <Grid container style={{ padding: "20px" }}>
             <Grid item xs={11}>
-              <TextField
+            <TextField
                 id="outlined-basic-email"
                 label="Escribe Algo"
                 fullWidth
+                value={messageText}
+                onChange={(e) => setMessageText(e.target.value)}
               />
             </Grid>
             <Grid item xs={1} align="right">
-              <Fab color="primary" aria-label="add">
+            <Fab
+                color="primary"
+                aria-label="add"
+                onClick={() => handleSend(messageText)}
+              >
                 <SendIcon />
               </Fab>
             </Grid>
