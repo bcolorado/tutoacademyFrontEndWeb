@@ -39,9 +39,6 @@ export function CreateProfile() {
   
   const date = new Date();
 
-  
-
-
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);

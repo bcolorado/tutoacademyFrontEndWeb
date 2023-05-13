@@ -15,11 +15,12 @@ import Fab from '@material-ui/core/Fab';
 import SendIcon from '@mui/icons-material/Send';
 import HorizontalNav from "./home/horizontalNav"
 import VerticalNav from './home/verticalNav';
+import { useAuthUser } from 'react-auth-kit';
+import {GET_PROFILE_QUERY,GET_CHAT_USER} from '../utilities/graphQl'
+import { useQuery } from '@apollo/client';
 
 const useStyles = makeStyles({
-  table: {
-    minWidth: 650,
-  },
+
   chatSection: {
     width: '60%',
     height: '72vh',
@@ -38,8 +39,27 @@ const useStyles = makeStyles({
   }
 });
 
+
 export function Chat()  {
   const classes = useStyles();
+
+
+  const authUser=useAuthUser();
+  const user=authUser();
+  
+  const { data, loading, error } = useQuery(GET_PROFILE_QUERY, {
+      variables: { id: user.googleId },
+    });
+
+  const { data:data2, loading:loading2, error:error2 } = useQuery(GET_CHAT_USER, {
+      variables: { name: user.googleId },
+    });
+
+  if (loading || loading2) return <p>Loading...</p>;
+  if (error || error2) return <p>Error :</p>;
+
+
+  console.log(data2.getChatUser[0])
 
   return (
       <div>
@@ -52,16 +72,14 @@ export function Chat()  {
                 <List>
                     <ListItem button key="RemySharp">
                         <ListItemIcon>
-                        <Avatar alt="Remy Sharp" src="https://material-ui.com/static/images/avatar/1.jpg" />
+                        <Avatar alt="Remy Sharp" src={user.imageUrl} />
                         </ListItemIcon>
-                        <ListItemText primary="John Wick"></ListItemText>
+                        <ListItemText primary={data.getProfile.fullname}></ListItemText>
                     </ListItem>
                 </List>
-                <Divider />
-                <Grid item xs={12} style={{padding: '10px'}}>
-                    <TextField id="outlined-basic-email" label="Search" variant="outlined" fullWidth />
-                </Grid>
-                <Divider />
+
+                <Divider /><Divider />
+
                 <List>
                     <ListItem button key="RemySharp">
                         <ListItemIcon>
@@ -122,7 +140,7 @@ export function Chat()  {
                     <Grid item xs={11}>
                         <TextField id="outlined-basic-email" label="Type Something" fullWidth />
                     </Grid>
-                    <Grid xs={1} align="right">
+                    <Grid item xs={1} align="right">
                         <Fab color="primary" aria-label="add"><SendIcon /></Fab>
                     </Grid>
                 </Grid>

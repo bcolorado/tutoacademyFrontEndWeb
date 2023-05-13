@@ -1,0 +1,23 @@
+table {
+    min-width: 650px;
+    }
+    
+    .chatSection {
+    width: 60%;
+    height: 72vh;
+    margin-top: 10vh;
+    margin-left: 26vw;
+    }
+    
+    .headBG {
+    background-color: #e0e0e0;
+    }
+    
+    .borderRight500 {
+    border-right: 1px solid #e0e0e0;
+    }
+    
+    .messageArea {
+    height: 60vh;
+    overflow-y: auto;
+    }

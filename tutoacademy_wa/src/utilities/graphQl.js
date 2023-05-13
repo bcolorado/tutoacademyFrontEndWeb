@@ -155,4 +155,34 @@ export const GET_ALLSERVICES_QUERY = gql`
 `;
 
 
+export const GET_CHAT_USER = gql`
+  query GetChatUser($name: String!) {
+    getChatUser(name: $name) {
+      chatId
+      sender {
+        fullname
+        userID {
+          googleId
+        }
+      }
+      receiver {
+        fullname
+        userID {
+          googleId
+        }
+      }
+      messages {
+        messageId
+        sender {
+          fullname
+        }
+        body
+        sendTime
+      }
+      state
+      createTime
+    }
+  }
+`;
+
 export const TEST="Hola baby ";
