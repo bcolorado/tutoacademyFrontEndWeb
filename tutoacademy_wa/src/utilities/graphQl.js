@@ -206,4 +206,21 @@ mutation AddMessage(
 }
 `;
 
+
+
+export const CREATE_SERVICE_MUTATION = gql`
+  mutation CreateService(
+    $idProfile: String!,
+    $description: String!, 
+    $serviceState: Boolean!) {
+
+    createService(service: { 
+
+      idProfile: $idProfile, 
+      description: $description, 
+      serviceState: $serviceState
+     }) 
+  }
+`;
+
 export const TEST="Hola baby ";
