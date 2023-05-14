@@ -52,11 +52,14 @@ function verticalNav() {
             <EventNote fontSize="large"/>
             <span>Mis tutorias</span>
           </NavLink>
-
-          <NavLink  to='/chats' className="nav-link">
+          {
+            data?.getProfile===null ? <></>:
+            <NavLink  to='/chats' className="nav-link">
             <Chat fontSize="large"/>
             <span>Chats</span>
           </NavLink>
+          }
+          
         </div>
 
         <div >

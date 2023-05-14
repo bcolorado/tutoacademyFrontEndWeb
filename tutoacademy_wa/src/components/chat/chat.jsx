@@ -127,7 +127,7 @@ let { data:data2, loading:loading2, error:error2, refetch} = useQuery(GET_CHAT_U
                 <Divider /><Divider />
 
                 <List>
-                  {data2?.getChatUser.map((data) => {
+                  {data2?.getChatUser?.map((data) => {
                       if (data.receiver.userID.googleId == user.googleId){return (<ProfilesChat data={data} key={data.sender.userID.googleId} onClick={handleProfileClick} />)}
                       else {return (<ProfilesChat data={data} key={data.receiver.userID.googleId} onClick={handleProfileClick} />)}
                   }
