@@ -23,6 +23,7 @@ import { MsgProfile } from './messages';
 import { useState } from 'react';
 import { ADDMESSAGE_CHAT_USER } from '../../utilities/graphQl';
 import {useMutation} from '@apollo/client';
+import { useEffect } from 'react';
 
 const useStyles = makeStyles({
 
@@ -50,13 +51,26 @@ export function Chat()  {
   const user=authUser();
   const [AddMessage, { data1, loading1, error1 }] = useMutation(ADDMESSAGE_CHAT_USER);
   const classes = useStyles();
-
+  const [messageText, setMessageText] = useState("");
   const [selectedProfile, setSelectedProfile] = useState(null);
+  const { data, loading, error } = useQuery(GET_PROFILE_QUERY, {
+    variables: { id: user.googleId },
+  });
+
+let { data:data2, loading:loading2, error:error2, refetch} = useQuery(GET_CHAT_USER, {
+    variables: { name: user.googleId },
+  });
+
+  useEffect(() => {
+    refetch()
+  }, [selectedProfile, messageText]);
+
   const handleProfileClick = (profile) => {
     setSelectedProfile(profile)
     // console.log(profile)
   };
 
+  
   const handleSend = async (msg) => {
     if(msg == ""){return}
     // console.log(msg)
@@ -83,22 +97,17 @@ export function Chat()  {
       console.log(e)
     }
   };
-
-  const [messageText, setMessageText] = useState("");
-  
-  const { data, loading, error } = useQuery(GET_PROFILE_QUERY, {
-      variables: { id: user.googleId },
-    });
-
-  const { data:data2, loading:loading2, error:error2 } = useQuery(GET_CHAT_USER, {
-      variables: { name: user.googleId },
-    });
+  const handleKeyPress = (event) => {
+    if (event.keyCode === 13) { // 13 is the code for "Enter" key
+      handleSend(messageText);
+    }
+  };
 
   if (loading || loading2) return <p>Loading...</p>;
   
 
 
-  return (
+  const renderPage = () => {return (
       <div>
 
         <VerticalNav/>
@@ -137,7 +146,8 @@ export function Chat()  {
                 label="Escribe Algo"
                 fullWidth
                 value={messageText}
-                onChange={(e) => setMessageText(e.target.value)}
+                onChange={async (e) => await setMessageText(e.target.value)}
+                onKeyDown={handleKeyPress}
               />
             </Grid>
             <Grid item xs={1} align="right">
@@ -154,7 +164,9 @@ export function Chat()  {
             </Grid>
         </Grid>
       </div>
-  );
+  );}
+
+  return renderPage()
 }
 
 export default Chat;

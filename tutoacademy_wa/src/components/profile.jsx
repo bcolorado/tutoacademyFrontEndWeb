@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
-
 import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
@@ -11,7 +10,7 @@ import Paper from '@mui/material/Paper';
 import HorizontalNav from "./home/horizontalNav"
 import VerticalNav from './home/verticalNav';
 import { useAuthUser } from 'react-auth-kit';
-import { GET_PROFILE_QUERY  } from '../utilities/graphQl';
+import { GET_PROFILE_QUERY, GET_CHAT_USER } from '../utilities/graphQl';
 import { useQuery } from '@apollo/client';
 import { useParams } from 'react-router-dom';
 import { Typography } from '@mui/material';
@@ -24,6 +23,7 @@ import {Service} from './service';
 import BookIcon from '@mui/icons-material/Book';
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import {ProfileChat} from './chat/profileChat';
 
 const mdTheme = createTheme();
 
@@ -42,18 +42,29 @@ export function Profile() {
     const { data, loading, error } = useQuery(GET_PROFILE_QUERY, {
       variables: { id: id },
     });
+
+    
   
     //Calling the query to verify if there is a service
-    const { data: data2, loading: loading2, error: error2, refetch } = useQuery(
-      GET_ALLSERVICES_QUERY
-    );
+    // const { data: data2, loading: loading2, error: error2, refetch } = useQuery(
+    //   GET_ALLSERVICES_QUERY
+    // );
+
+    const { data:data3, loading:loading3, error:error3 } = useQuery(GET_CHAT_USER, {
+      variables: { name: id },
+    });
+
+
+
+
 
     let found = false;
     let itemDescription="";
     const [idProfileService, setIdProfileService] = useState(true);
+    let  chatCoincidence=true;
 
     useEffect(() => {
-      refetch();
+      // refetch();
       if(id==user.googleId){
         setIdProfileService(true)
           
@@ -65,34 +76,43 @@ export function Profile() {
     }, [location.pathname ]);
 
   
-    if (loading || loading2) return <p>Loading...</p>;
-    if (error || error2) return <p>Error :</p>;
+    // if (loading || loading2) return <p>Loading...</p>;
+    // if (error || error2) return <p>Error :</p>;
+
+    if (loading || loading3) return <p>Loading...</p>;
+    // if (error || error3 )return <p>Error :</p>;
+    if(error) return <p>Error...</p>;
+     
+
+    data3==undefined ? <></>:console.log(data3.getChatUser)
+
+    // Check if the current profile have a chat with me
+
+    data3?.getChatUser?.map((item) => {
+      if (item.receiver.userID.googleId==user.googleId || item.sender.userID.googleId==user.googleId) {
+        chatCoincidence=false
+      }
+    });
 
 
     
     // Check if the current profile have a service
 
-    data2.allServices.map((item) => {
-      if (item.serviceState==true) {
-        if (item.idProfile.userID.googleId === data.getProfile.userID.googleId) {
-          console.log(`Encontrado: ${item.idService}`);
-          console.log(item.description);
-          found = true;
-          itemDescription=item.description;
-          // if(item.idProfile != null){
-          //   item.idProfile.userID.googleId == user.googleId ? idProfileService=true: idProfileService=false;
-          // }
-        }
+    // data2.allServices.map((item) => {
+    //   if (item.serviceState==true) {
+    //     if (item.idProfile.userID.googleId === data.getProfile.userID.googleId) {
+    //       console.log(`Encontrado: ${item.idService}`);
+    //       console.log(item.description);
+    //       found = true;
+    //       itemDescription=item.description;
+    //     }
 
-      }
-    });
+    //   }
+    // });
 
-    if (!found) {
-      console.log('Este perfil no cuenta con un servicio');
-    }
 
-    console.log(data.getProfile.userID.googleId); 
-    console.log(data2)
+    // console.log(data.getProfile.userID.googleId); 
+    // console.log(data2)
 
 
 
@@ -118,6 +138,7 @@ export function Profile() {
           <HorizontalNav/>
           
           <Container maxWidth="lg" sx={{ mt: 12, mb: 4, mr:27}}>
+            
             <Grid container spacing={3}>
 
               <Grid item xs={12} md={8} lg={9}>
@@ -191,7 +212,7 @@ export function Profile() {
 
                 <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column', height: 400, mt:3 }}>
 
-                {
+                {/* {
                   idProfileService ? (
                     <>
                       {found == false ? (
@@ -221,7 +242,7 @@ export function Profile() {
                     </>
                   )}
                 </>
-                }
+                } */}
                 </Paper>
               </Grid>
 
@@ -245,6 +266,12 @@ export function Profile() {
                   <Typography variant='subtitle1'>
                     {data.getProfile.gender === 'male' ? 'Masculino' : data.getProfile.gender === 'female' ? 'Femenino' : 'Otro'}
                   </Typography>
+
+                  {
+                    
+                    !idProfileService && chatCoincidence? <ProfileChat receiver={id}/>:<></>
+                    
+                  }
 
                   <Typography variant='subtitle1' sx={{mt:12}}>
                     Aquí van los horarios

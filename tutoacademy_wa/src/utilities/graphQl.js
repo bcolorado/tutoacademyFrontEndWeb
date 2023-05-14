@@ -206,6 +206,21 @@ mutation AddMessage(
 }
 `;
 
+export const CREATE_CHAT_USER = gql`
+mutation CreateChat(
+  $sender: String!,
+  $receiver: String!,
+  $messages: [messageSchemaInput]!,
+)
+{
+  createChat(chat: {
+    sender: $sender,
+    receiver: $receiver,
+    messages:  $messages
+  })
+}
+`;
+
 
 
 export const CREATE_SERVICE_MUTATION = gql`
