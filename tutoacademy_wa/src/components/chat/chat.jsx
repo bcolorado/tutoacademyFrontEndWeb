@@ -72,31 +72,48 @@ let { data:data2, loading:loading2, error:error2, refetch} = useQuery(GET_CHAT_U
 
   
   const handleSend = async (msg) => {
-    if(msg == ""){return}
-    // console.log(msg)
-    let receiver = ""
-    if (selectedProfile.receiver.userID.googleId == user.googleId){receiver = selectedProfile.sender.userID.googleId}
-    else{ receiver = selectedProfile.receiver.userID.googleId}
-    // console.log(receiver)
-    let msgF = [{
+    if (msg === '') {
+      return;
+    }
+  
+    let receiver = '';
+    if (selectedProfile.receiver.userID.googleId === user.googleId) {
+      receiver = selectedProfile.sender.userID.googleId;
+    } else {
+      receiver = selectedProfile.receiver.userID.googleId;
+    }
+  
+    let msgF = [
+      {
         sender: user.googleId,
-        body: msg
-    }]
-    // console.log(msgF)
-    try{
+        body: msg,
+      },
+    ];
+  
+    try {
       const result = await AddMessage({
         variables: {
           sender: user.googleId,
           receiver: receiver,
-          messages: msgF
-        }
+          messages: msgF,
+        },
       });
-      console.log(result)
-      setMessageText("")
+      console.log(result);
+      setMessageText('');
+  
+      // Actualizar selectedProfile para mostrar los nuevos mensajes
+      const updatedProfile = data2.getChatUser.find(
+        (data) =>
+          (data.receiver.userID.googleId === user.googleId && data.sender.userID.googleId === receiver) ||
+          (data.receiver.userID.googleId === receiver && data.sender.userID.googleId === user.googleId)
+      );
+      setSelectedProfile(updatedProfile);
     } catch (e) {
-      console.log(e)
+      console.log(e);
     }
   };
+  
+  
   const handleKeyPress = (event) => {
     if (event.keyCode === 13) { // 13 is the code for "Enter" key
       handleSend(messageText);

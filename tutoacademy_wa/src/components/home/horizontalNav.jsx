@@ -6,7 +6,6 @@ import SearchBar from '@mkyy/mui-search-bar';
 import { useQuery } from '@apollo/client';
 import { FIND_PROFILE_QUERY } from '../../utilities/graphQl';
 import { ProfileResult } from './profileResult';
-import { MenuItem } from '@mui/material';
 
 function HorizontalNav() {
   const [searchValue, setSearchValue] = useState('');
@@ -52,13 +51,14 @@ function HorizontalNav() {
         />
       </div>
       <div ref={searchRef} className="search-results">
-        {data && data.findProfiles && searchResults && searchResults.map((data) => {
-            return (
-              <MenuItem sx={{ width: '300px' }} key={data?.userID.googleId}>
-                <ProfileResult key={data?.userID.googleId} data={data} />
-              </MenuItem>
-            );
-          })}
+        {data &&
+          data.findProfiles &&
+          searchResults &&
+          searchResults.map((data) => (
+            <div key={data?.userID.googleId} style={{ marginBottom: '10px', width: '400px' }}>
+              <ProfileResult data={data} />
+            </div>
+          ))}
       </div>
     </>
   );
