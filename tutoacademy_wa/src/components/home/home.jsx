@@ -1,4 +1,3 @@
-
 import VerticalNav from './verticalNav'
 import HorizontalNav from './horizontalNav'
 import '../../styles/home.css'
@@ -7,7 +6,7 @@ import 'animate.css';
 import {Calendar} from "./calendar"
 import { GET_PROFILE_QUERY  } from '../../utilities/graphQl';
 import {useQuery, useMutation,gql} from '@apollo/client';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
 
 export function Home() {
@@ -17,10 +16,19 @@ export function Home() {
   const user=authUser();
 
   //Calling the query to verify if the profile is created
-  const { data, loading, error } = useQuery(GET_PROFILE_QUERY, {
+  const { data, loading, error, refetch} = useQuery(GET_PROFILE_QUERY, {
     variables: { id: user.googleId },
   });
 
+  // Use the useLocation hook to get the current location
+  const location = useLocation();
+
+  // Use the useEffect hook to re-render Home when the location changes
+  useEffect(() => {
+    // Render Home again
+    refetch()
+    console.log('Rendering Home again...');
+  }, [location]);
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :</p>;
