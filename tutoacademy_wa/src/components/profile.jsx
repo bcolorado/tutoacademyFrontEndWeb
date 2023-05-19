@@ -24,6 +24,7 @@ import BookIcon from '@mui/icons-material/Book';
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import {ProfileChat} from './chat/profileChat';
+import {MeetScheduling} from './meetScheduling'
 
 const mdTheme = createTheme();
 
@@ -46,9 +47,9 @@ export function Profile() {
     
   
     //Calling the query to verify if there is a service
-    // const { data: data2, loading: loading2, error: error2, refetch } = useQuery(
-    //   GET_ALLSERVICES_QUERY
-    // );
+    const { data: data2, loading: loading2, error: error2, refetch } = useQuery(
+      GET_ALLSERVICES_QUERY
+    );
 
     const { data:data3, loading:loading3, error:error3 } = useQuery(GET_CHAT_USER, {
       variables: { name: id },
@@ -64,7 +65,7 @@ export function Profile() {
     let  chatCoincidence=true;
 
     useEffect(() => {
-      // refetch();
+      refetch();
       if(id==user.googleId){
         setIdProfileService(true)
           
@@ -72,19 +73,13 @@ export function Profile() {
         setIdProfileService(false)
 
       }
-      console.log(id)
+      
     }, [location.pathname ]);
 
   
-    // if (loading || loading2) return <p>Loading...</p>;
-    // if (error || error2) return <p>Error :</p>;
-
-    if (loading || loading3) return <p>Loading...</p>;
-    // if (error || error3 )return <p>Error :</p>;
-    if(error) return <p>Error...</p>;
+    if (loading || loading2 || loading3) return <p>Loading...</p>;
+    if (error || error2) return <p>Error :</p>;
      
-
-    data3==undefined ? <></>:console.log(data3.getChatUser)
 
     // Check if the current profile have a chat with me
 
@@ -98,22 +93,17 @@ export function Profile() {
     
     // Check if the current profile have a service
 
-    // data2.allServices.map((item) => {
-    //   if (item.serviceState==true) {
-    //     if (item.idProfile.userID.googleId === data.getProfile.userID.googleId) {
-    //       console.log(`Encontrado: ${item.idService}`);
-    //       console.log(item.description);
-    //       found = true;
-    //       itemDescription=item.description;
-    //     }
+    data2.allServices.map((item) => {
+      if (item.serviceState==true) {
+        if (item.idProfile.userID.googleId === data.getProfile.userID.googleId) {
+          console.log(`Encontrado: ${item.idService}`);
+          console.log(item.description);
+          found = true;
+          itemDescription=item.description;
+        }
 
-    //   }
-    // });
-
-
-    // console.log(data.getProfile.userID.googleId); 
-    // console.log(data2)
-
+      }
+    });
 
 
   return (
@@ -212,7 +202,7 @@ export function Profile() {
 
                 <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column', height: 400, mt:3 }}>
 
-                {/* {
+                {
                   idProfileService ? (
                     <>
                       {found == false ? (
@@ -242,7 +232,7 @@ export function Profile() {
                     </>
                   )}
                 </>
-                } */}
+                }
                 </Paper>
               </Grid>
 
@@ -274,7 +264,7 @@ export function Profile() {
                   }
 
                   <Typography variant='subtitle1' sx={{mt:12}}>
-                    Aquí van los horarios
+                    {idProfileService && found? <MeetScheduling/>:<></> }
                   </Typography>
 
                 </Paper>

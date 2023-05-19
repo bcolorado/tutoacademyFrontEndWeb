@@ -1,4 +1,3 @@
-
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
@@ -18,19 +17,19 @@ export function Service(props) {
     const handleChangeDescription = (event) => {
       setDescription(event.target.value);
     };
-  
-      const [open, setOpen] = React.useState(false);
-  
-      const handleClickOpen = () => {
-        setOpen(true);
-      };
-  
-      const handleClose = () => {
-        setOpen(false);
-      };
 
-      const [createService, { loading:loading3, error: error3, data: data3 }] = useMutation(CREATE_SERVICE_MUTATION);
-      
+    const [open, setOpen] = React.useState(false);
+
+    const handleClickOpen = () => {
+      setOpen(true);
+    };
+
+    const handleClose = () => {
+      setOpen(false);
+    };
+
+    const [createService, { loading:loading3, error: error3, data: data3 }] = useMutation(CREATE_SERVICE_MUTATION);
+
     const handleCreateService = () => {
 
         try {
@@ -42,6 +41,7 @@ export function Service(props) {
             },
           });
           setOpen(false);
+          window.location.reload();
           return result
         } catch (e) {
           return e
@@ -91,10 +91,6 @@ export function Service(props) {
             </>
 
   )
- 
+
 }
 export default Service;
-
-
-
-
