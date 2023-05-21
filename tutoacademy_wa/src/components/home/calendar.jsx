@@ -8,26 +8,37 @@ import {
   AppointmentTooltip
 } from "@devexpress/dx-react-scheduler-material-ui";
 import { ViewState } from "@devexpress/dx-react-scheduler";
+import { useQuery } from '@apollo/client';
+import {GET_ALLREQUESTS_QUERY} from '../../utilities/graphQl'
+import {getDateCalendar} from '../../utilities/getDateToCalendar';
+import { useAuthUser } from "react-auth-kit";
+
 
 export function Calendar(){
 
-  const date = new Date();
-  const tomorrow = new Date(date.getFullYear(), date.getMonth(), date.getDate()+1);
-  const start = new Date(tomorrow.getFullYear(), tomorrow.getMonth(), tomorrow.getDate(), 9, 30, 0);
-  const end = new Date(tomorrow.getFullYear(), tomorrow.getMonth(), tomorrow.getDate(), 11, 0, 0);
+  const authUser=useAuthUser();
+  const user=authUser();
 
-  const prueba = new Date ()
-  
-  const schedulerData = [
-    { startDate: start, endDate: end, title: 'Meeting' },
-  ];
+  const { data, loading, error } = useQuery(GET_ALLREQUESTS_QUERY);
 
-  console.log(schedulerData)
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error :</p>;
+
+
+  var MyRequests=[];
+  data.allRequests.map((item) => {
+    if (item.user_req.userID.googleId == user.googleId || item.tutor.userID.googleId == user.googleId ) {
+      const [start,end]=getDateCalendar(item.scheduled_time)
+      MyRequests.push({ startDate: start, endDate: end, title: item.message });
+    }
+  });
+
+  console.log(MyRequests);
+
 
   return (
   <Paper sx={{ width: "70vw" , height: "60vh" }}>
-    <Scheduler height={"60vh"} data={schedulerData}>
-      {/* <ViewState defaultCurrentDate={fechaFormateada}/> */}
+    <Scheduler height={"60vh"} data={MyRequests}>
       <WeekView  startDayHour={9} endDayHour={19} />
       <Appointments/>
       <AppointmentTooltip />

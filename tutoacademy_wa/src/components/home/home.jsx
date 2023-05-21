@@ -8,6 +8,7 @@ import { GET_PROFILE_QUERY  } from '../../utilities/graphQl';
 import {useQuery, useMutation,gql} from '@apollo/client';
 import { Link, useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
+import { NewtonsCradle } from '@uiball/loaders'
 
 export function Home() {
 
@@ -30,15 +31,16 @@ export function Home() {
     console.log('Rendering Home again...');
   }, [location]);
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) {
+    return (
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+        <NewtonsCradle size={80} speed={0.8} color="black" />
+      </div>
+    );
+  }
   if (error) return <p>Error :</p>;
 
-  console.log(data.getProfile);
-  if(data.getProfile){
-    console.log("Si está el perfil");
-  }else{
-    console.log("No está el perfil")
-  }
+
   
   return (
   <>   

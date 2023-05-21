@@ -238,4 +238,38 @@ export const CREATE_SERVICE_MUTATION = gql`
   }
 `;
 
+
+export const CREATE_REQUEST_MUTATION = gql`
+  mutation CreateRequest($user_req: String!, $tutor: String!, $message: String!, $scheduled_time: String!, $accepted: String!) {
+    createRequest(request: {
+      user_req: $user_req
+      tutor: $tutor
+      message: $message
+      scheduled_time: $scheduled_time
+      accepted: $accepted
+    })
+  }
+`;
+
+export const GET_ALLREQUESTS_QUERY = gql`
+query GetAllRequests {
+  allRequests {
+    user_req {
+      userID {
+        googleId
+      }
+    }
+    tutor {
+      userID {
+        googleId
+      }
+    }
+    message
+    scheduled_time
+    accepted
+  }
+}
+`;
+
+
 export const TEST="Hola baby ";

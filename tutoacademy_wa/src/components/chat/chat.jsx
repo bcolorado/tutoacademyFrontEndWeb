@@ -24,6 +24,7 @@ import { useState } from 'react';
 import { ADDMESSAGE_CHAT_USER } from '../../utilities/graphQl';
 import {useMutation} from '@apollo/client';
 import { useEffect } from 'react';
+import { NewtonsCradle } from '@uiball/loaders'
 
 const useStyles = makeStyles({
 
@@ -120,7 +121,13 @@ let { data:data2, loading:loading2, error:error2, refetch} = useQuery(GET_CHAT_U
     }
   };
 
-  if (loading || loading2) return <p>Loading...</p>;
+  if (loading || loading2){
+    return (
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+        <NewtonsCradle size={80} speed={0.8} color="black" />
+      </div>
+    );
+  }
   
 
 

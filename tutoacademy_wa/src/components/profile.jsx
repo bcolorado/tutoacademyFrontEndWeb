@@ -25,6 +25,9 @@ import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import {ProfileChat} from './chat/profileChat';
 import {MeetScheduling} from './meetScheduling'
+import { NewtonsCradle } from '@uiball/loaders'
+
+
 
 const mdTheme = createTheme();
 
@@ -77,7 +80,13 @@ export function Profile() {
     }, [location.pathname ]);
 
   
-    if (loading || loading2 || loading3) return <p>Loading...</p>;
+    if (loading || loading2 || loading3) {
+      return (
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+          <NewtonsCradle size={80} speed={0.8} color="black" />
+        </div>
+      );
+    }
     if (error || error2) return <p>Error :</p>;
      
 
@@ -140,7 +149,7 @@ export function Profile() {
                           <DescriptionIcon  fontSize="large" />
                         </Grid>
                         <Grid item>
-                          <Typography variant="subtitle1" fontWeight="bold" sx={{ marginLeft: '12px', mr:40 }}>Descripción </Typography>
+                          <Typography variant="subtitle1" fontWeight="bold" sx={{ marginLeft: '12px', mr:80 }}>Descripción </Typography>
                           
                         </Grid>
                         
@@ -264,7 +273,7 @@ export function Profile() {
                   }
 
                   <Typography variant='subtitle1' sx={{mt:12}}>
-                    {idProfileService && found? <MeetScheduling/>:<></> }
+                    {!idProfileService && found? <MeetScheduling/>:<></> }
                   </Typography>
 
                 </Paper>

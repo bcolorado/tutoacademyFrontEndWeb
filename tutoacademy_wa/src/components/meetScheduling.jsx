@@ -9,21 +9,57 @@ import { useEffect, useState } from 'react';
 import * as React from 'react';
 import { useMutation } from '@apollo/client';
 import { useAuthUser } from 'react-auth-kit';
-import Datetime from 'react-datetime';
+import { useParams } from 'react-router-dom';
 import "react-datetime/css/react-datetime.css";
+import {getDayOfWeek} from '../utilities/getDayOfWeek'
+import {CREATE_REQUEST_MUTATION} from '../utilities/graphQl';
 
 
 export function MeetScheduling() {
 
+    const [createRequest, { loading, error }] = useMutation(CREATE_REQUEST_MUTATION);
+
+    //current date
+    var today = new Date();
+
+    
+    // Obtener los componentes de la fecha (año, mes, día)
+    var year = today.getFullYear();
+    var month = (today.getMonth() + 1).toString().padStart(2, '0');
+    var day = today.getDate().toString().padStart(2, '0');
+
+    // Construir la fecha en el formato requerido (AAAA-MM-DD)
+    var formattedDate = year + '-' + month + '-' + day;
+
+
+    // Establecer el valor mínimo y máximo para la semana actual
+    var firstDayOfWeek = new Date(today.setDate(today.getDate() - today.getDay()));
+    var lastDayOfWeek = new Date(today.setDate(today.getDate() - today.getDay() + 6));
+
+    // Formatear las fechas en el formato requerido (AAAA-MM-DD)
+    var minDate = firstDayOfWeek.toISOString().split('T')[0];
+    var maxDate = lastDayOfWeek.toISOString().split('T')[0];
+
+
     const authUser=useAuthUser();
     const user=authUser();
+    const { id } = useParams();
 
     const [message, setMessage] = useState('');
-    const [idStudent, setIdStudent] = useState('');
-    const [scheduleDate, setScheduleDate] = useState(null);
+    const [scheduleDate, setScheduleDate] = useState(formattedDate);
+    const [scheduleInitialTime, setscheduleInitialTime] = useState('');
+    const [scheduleFinalTime, setscheduleFinalTime] = useState('');
 
     const handleChangeScheduleDate = (event) => {
-        setScheduleDate(event._d);
+        setScheduleDate(event.target.value);
+    };
+
+    const handleChangeInitialTime = (event) => {
+      setscheduleInitialTime(event.target.value);
+
+    };
+    const handleChangeFinalTime = (event) => {
+      setscheduleFinalTime(event.target.value);
     };
 
     const handleChangeIdSstudent = (event) => {
@@ -45,10 +81,27 @@ export function MeetScheduling() {
       };
 
 
-      
 
-      const handleCreateChat = async () => {
-        console.log(scheduleDate)
+      const handleCreateMeeting = async () => {
+        const dayOfWeek = getDayOfWeek(scheduleDate);
+        const meetingDate = dayOfWeek+', '+scheduleInitialTime+" - "+scheduleFinalTime;
+
+        try {
+          const result = await createRequest({
+            variables: {
+              user_req: user.googleId,
+              tutor: id,
+              message: message,
+              scheduled_time: meetingDate,
+              accepted: "true"
+            },
+          });
+          setOpen(false);
+          window.location.reload();
+          return result
+        } catch (e) {
+          return e
+        }
       };
 
 
@@ -58,7 +111,7 @@ export function MeetScheduling() {
   return (
 
             <>
-                              <Button 
+                  <Button 
                     variant="contained" 
                     onClick={handleClickOpen} 
                     style={{ 
@@ -80,15 +133,6 @@ export function MeetScheduling() {
                         <TextField
                             fullWidth
                             margin="dense"
-                            id="id_student"
-                            type="text"
-                            value={idStudent}
-                            onChange={handleChangeIdSstudent}
-                            label='ID estudiante'
-                        />
-                        <TextField
-                            fullWidth
-                            margin="dense"
                             id="message"
                             type="text"
                             multiline
@@ -96,14 +140,47 @@ export function MeetScheduling() {
                             value={message}
                             onChange={handleChangeMessage}
                             label='Descripción cita'
+                            required
                         />
-                        <Datetime value={scheduleDate} onChange={handleChangeScheduleDate} />
+
+                        <div style={{ display: 'flex', flexDirection: 'column', maxWidth:'150px' }}>
+                              <input
+                                type="date"
+                                value={scheduleDate}
+                                onChange={handleChangeScheduleDate}
+                                min={minDate}
+                                max={maxDate}
+                                style={{ marginTop: '10px' }}
+                                required
+                              />
+
+                              <input
+                                type="time"
+                                min="09:00"
+                                max="19:00"
+                                value={scheduleInitialTime}
+                                onChange={handleChangeInitialTime}
+                                style={{ marginTop: '10px' }}
+                                required
+                              />
+
+                              <input
+                                type="time"
+                                min="09:00"
+                                max="19:00"
+                                value={scheduleFinalTime}
+                                onChange={handleChangeFinalTime}
+                                style={{ marginTop: '10px' }}
+                                required
+                              />
+                            </div>
+
 
 
                     </DialogContent>
                     <DialogActions>
                       <Button onClick={handleClose}>Cancelar</Button>
-                      <Button onClick={(handleCreateChat)}>Enviar</Button>
+                      <Button onClick={(handleCreateMeeting)}>Enviar</Button>
                     </DialogActions>
                   </Dialog>
             </>
