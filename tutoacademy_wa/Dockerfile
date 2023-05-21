@@ -1,20 +1,18 @@
-# Establecer la imagen base
-FROM node:16
+# Etapa de construcción
+FROM node:16 as build-stage
 
-# Crear el directorio de la aplicación
-WORKDIR /usr/src/app
+WORKDIR /app
 
-# Copiar el archivo package.json y package-lock.json (si existe)
-COPY package*.json ./
-
-# Instalar las dependencias
+COPY package.json .
+COPY package-lock.json .
 RUN npm install --force
 
-# Copiar el código fuente de la aplicación
 COPY . .
+RUN npm run build
 
-# Exponer el puerto 5173
+# Etapa de producción
+FROM nginx:alpine as production-stage
+COPY --from=build-stage /app/dist /usr/share/nginx/html
+COPY ./nginx.conf /etc/nginx/conf.d/default.conf
 EXPOSE 5173
-
-# Comando para iniciar la aplicación
-CMD [ "npm", "run", "dev" ]
+CMD ["nginx", "-g", "daemon off;"]

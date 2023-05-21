@@ -5,8 +5,8 @@ import react from '@vitejs/plugin-react-swc'
 export default defineConfig({
   plugins: [react()],
   server: {
-    port: 5173
+    host: true,
+    port: 5173, // This is the port which we will use in docker
   }
-})
-
+ })
 
