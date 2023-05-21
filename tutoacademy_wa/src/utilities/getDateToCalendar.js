@@ -8,7 +8,7 @@ export function getDateCalendar(fecha) {
       "Jueves": 4,
       "Viernes": 5,
       "Sabado": 6,
-      "Domingo": 7
+      "Domingo": 0
     };
   
     const fechaActual = new Date();
@@ -45,7 +45,8 @@ export function getDateCalendar(fecha) {
 
     const startDate = fechaFinalFormateada.replace(/(Mon|Tue|Wed|Thu|Fri|Sat|Sun)/, diaSemanaAbreviado);
     const endDate = fechaFinalTerminacionFormateada.replace(/(Mon|Tue|Wed|Thu|Fri|Sat|Sun)/, diaSemanaTerminacionAbreviado)
-
+    // console.log(startDate)
+    // console.log(endDate)
     return [startDate, endDate];
 
   }

@@ -59,7 +59,7 @@ export function Login() {
   //use the mutation    
   const handleLogin = async (payload) => {
     if (!payload.family_name){payload.family_name = " "}
-    console.log( payload.id, payload.given_name,payload.email, payload.family_name,payload.picture);
+    // console.log( payload.id, payload.given_name,payload.email, payload.family_name,payload.picture);
     try {
       const result = await loginUser({
         variables: {

@@ -28,7 +28,7 @@ export function Home() {
   useEffect(() => {
     // Render Home again
     refetch()
-    console.log('Rendering Home again...');
+    // console.log('Rendering Home again...');
   }, [location]);
 
   if (loading) {

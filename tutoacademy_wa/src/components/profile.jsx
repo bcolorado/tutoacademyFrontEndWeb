@@ -105,8 +105,8 @@ export function Profile() {
     data2.allServices.map((item) => {
       if (item.serviceState==true) {
         if (item.idProfile.userID.googleId === data.getProfile.userID.googleId) {
-          console.log(`Encontrado: ${item.idService}`);
-          console.log(item.description);
+          // console.log(`Encontrado: ${item.idService}`);
+          // console.log(item.description);
           found = true;
           itemDescription=item.description;
         }
@@ -212,7 +212,7 @@ export function Profile() {
                 <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column', height: 400, mt:3 }}>
 
                 {
-                  idProfileService ? (
+                  idProfileService &&  found == false ? (
                     <>
                       {found == false ? (
                         <Service data={data} />

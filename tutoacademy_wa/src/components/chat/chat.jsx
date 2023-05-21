@@ -99,7 +99,7 @@ let { data:data2, loading:loading2, error:error2, refetch} = useQuery(GET_CHAT_U
           messages: msgF,
         },
       });
-      console.log(result);
+      // console.log(result);
       setMessageText('');
   
       // Actualizar selectedProfile para mostrar los nuevos mensajes

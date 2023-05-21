@@ -3,6 +3,7 @@ import { Login } from "./components/login";
 import { Home } from "./components/home/home.jsx";
 import {Profile} from "./components/profile"
 import {Chat} from './components/chat/chat';
+import Meetings from "./components/meetings/meetings";
 import { CreateProfile } from "./components/createProfile";
 import { RequireAuth } from "react-auth-kit";
 
@@ -31,6 +32,10 @@ function App() {
         <Route exact path="/chats" element={<RequireAuth loginPath="/">
           <Chat />
         </RequireAuth>} />   
+
+        <Route exact path="/calendar" element={<RequireAuth loginPath="/">
+          <Meetings />
+        </RequireAuth>} />
 
 
         

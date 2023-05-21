@@ -34,7 +34,7 @@ export function MsgProfile(props) {
   const classes = useStyles();
 
   useEffect(() => {
-    console.log("props.data ha cambiado:", props.data);
+    // console.log("props.data ha cambiado:", props.data);
   }, [props.data]); 
 
   return (

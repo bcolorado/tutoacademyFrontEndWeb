@@ -254,15 +254,20 @@ export const CREATE_REQUEST_MUTATION = gql`
 export const GET_ALLREQUESTS_QUERY = gql`
 query GetAllRequests {
   allRequests {
+    id
     user_req {
+      fullname
       userID {
         googleId
+        imageUrl
       }
     }
     tutor {
-      userID {
-        googleId
-      }
+      fullname
+        userID {
+          googleId
+          imageUrl
+        }
     }
     message
     scheduled_time
@@ -271,5 +276,10 @@ query GetAllRequests {
 }
 `;
 
+export const DELETE_REQUEST_MUTATION = gql`
+mutation DeleteRequest($id:Int!) {
+  deleteRequest(id: $id) 
+}
+`;
 
 export const TEST="Hola baby ";

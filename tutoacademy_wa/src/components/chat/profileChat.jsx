@@ -52,8 +52,8 @@ export function ProfileChat(props) {
         } catch (e) {
           console.log(e)
         }
-        console.log(message)
-        console.log(props.receiver)
+        // console.log(message)
+        // console.log(props.receiver)
       };
 
 
