@@ -24,6 +24,13 @@ function verticalNav() {
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :</p>;
 
+  const handleSignOut = () => {
+    // Eliminar el token de acceso del Local Storage
+    localStorage.removeItem("accessToken");
+    // Cerrar la sesión del usuario
+    signOut();
+  };
+
 
 
   let profileURL="";
@@ -64,7 +71,7 @@ function verticalNav() {
 
         <div >
 
-          <NavLink onClick={signOut} to="/" className="nav-link">
+          <NavLink onClick={handleSignOut} to="/" className="nav-link">
             <Logout fontSize="large"/>
             <span>Cerrar sesión</span>
           </NavLink>

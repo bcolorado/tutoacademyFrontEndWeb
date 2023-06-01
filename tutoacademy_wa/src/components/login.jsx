@@ -24,6 +24,7 @@ export function Login() {
     //Google response with acces token
     onSuccess: ({ access_token }) => {
       localStorage.setItem("accessToken", access_token);
+      
       setUser(true);
     },
     onError: (error) => console.log("Login Failed:", error),
