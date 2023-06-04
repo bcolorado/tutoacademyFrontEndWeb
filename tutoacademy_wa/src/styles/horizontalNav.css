@@ -1,3 +1,9 @@
+* {
+    font-family: "Roboto", sans-serif;
+  }
+  
+  
+
 .horizontal-nav {
     display: grid;
     background-color: white;
@@ -15,6 +21,7 @@
     background-color: white;
     border: 1px solid grey;
     max-width: 70%;
+    
   }
   
 .horizontal-nav img {
@@ -36,6 +43,16 @@
         border-color: black;
         max-width: 30%;
     };
+
+
+    .hoverable-div {
+        border: 1px solid black;
+        transition: background-color 0.5s;
+      }
+      
+      .hoverable-div:hover {
+        background-color: #f0f0f0;
+      }
 
 
 

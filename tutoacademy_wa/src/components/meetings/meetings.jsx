@@ -9,6 +9,7 @@ import { DELETE_REQUEST_MUTATION } from '../../utilities/graphQl';
 import { useMutation } from '@apollo/client';
 import { NewtonsCradle } from '@uiball/loaders'
 import logo from '../../assets/logo.png';
+import '../../styles/meetings.css'
 export function Meetings() {
   const authUser = useAuthUser();
   const user = authUser();
@@ -81,7 +82,7 @@ export function Meetings() {
                 alignItems: 'center',
               }}
             >
-              <h2>Tutor</h2>
+              <h3>Tutor</h3>
               <Avatar
                 style={{ width: '60px', height: '60px' }}
                 src={request.tutor.userID.imageUrl}
@@ -93,9 +94,10 @@ export function Meetings() {
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
+                marginLeft: '10px'
               }}
             >
-              <h2>Estudiante</h2>
+              <h3>Estudiante</h3>
               <Avatar
                 style={{ width: '60px', height: '60px' }}
                 src={request.user_req.userID.imageUrl}
@@ -103,7 +105,7 @@ export function Meetings() {
               />
             </div>
             <div style={{ marginLeft: '100px' }}>
-              <h2>Solicitud de reunión</h2>
+              <h3>Solicitud de reunión</h3>
               <p>
                 <strong>Estudiante:</strong> {request.user_req.fullname}
               </p>
@@ -123,7 +125,7 @@ export function Meetings() {
                   right: '10px',
                   top: '50%',
                   transform: 'translateY(-50%)',
-                  backgroundColor: '#F09E00',
+                  backgroundColor: 'rgba(240, 158, 0, 0.6)',
                   color: 'black',
                   borderRadius: '5px',
                   border: 'none',

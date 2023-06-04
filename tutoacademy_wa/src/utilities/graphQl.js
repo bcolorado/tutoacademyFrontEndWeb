@@ -282,4 +282,15 @@ mutation DeleteRequest($id:Int!) {
 }
 `;
 
+export const GET_PRODUCTS_QUERY = gql`
+  {
+    getSourcelambdaProducts {
+      title
+      price
+      image
+      units
+    }
+  }
+`;
+
 export const TEST="Hola baby ";
