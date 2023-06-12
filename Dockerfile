@@ -1,5 +1,5 @@
 # Etapa de construcción
-FROM node:16 as build-stage
+FROM node:16 as builder
 
 WORKDIR /app
 
@@ -11,8 +11,9 @@ COPY . .
 RUN npm run build
 
 # Etapa de producción
-FROM nginx:alpine as production-stage
-COPY --from=build-stage /app/dist /usr/share/nginx/html
+FROM nginx:alpine as prod
+EXPOSE 80
+COPY --from=builder /app/dist /usr/share/nginx/html
 COPY ./nginx.conf /etc/nginx/conf.d/default.conf
-EXPOSE 5173
+
 CMD ["nginx", "-g", "daemon off;"]
