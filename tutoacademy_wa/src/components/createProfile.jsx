@@ -85,7 +85,7 @@ export function CreateProfile() {
   return (
     <div className='main'>
     <ThemeProvider  theme={theme}>
-      <Container   maxWidth="xs" style={{ maxHeight: "100vh", overflow: "hidden" }}>
+      <Container   maxWidth="xs" style={{ maxHeight: "100vh" }}>
         <CssBaseline />
         <Box
           sx={{

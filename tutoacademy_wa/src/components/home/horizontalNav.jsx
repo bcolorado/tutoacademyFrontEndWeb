@@ -62,8 +62,8 @@ function HorizontalNav() {
   }, []);
 
   const {data: data2,loading: loading2,error: error2,} = useQuery(GET_PRODUCTS_QUERY);
-  if ( loading2) return <p>Loading...</p>;
-  if ( error2) return <p>Error :</p>;
+  // if ( loading2) return <p>Loading...</p>;
+  // if ( error2) return <p>Error :</p>;
   
 
   return (
@@ -128,8 +128,8 @@ function HorizontalNav() {
        
       </DialogTitle>
       <DialogContent style={{ maxHeight: "325px", overflow: "auto" }}>
-        {data2.getSourcelambdaProducts.length > 0 ? (
-          data2.getSourcelambdaProducts.map((product) => (
+        {data2?.getSourcelambdaProducts?.length > 0 ? (
+          data2?.getSourcelambdaProducts.map((product) => (
             <div
               key={product.title}
               style={{
