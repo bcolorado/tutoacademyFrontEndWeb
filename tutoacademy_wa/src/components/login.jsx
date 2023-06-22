@@ -47,12 +47,16 @@ export function Login() {
         )
         .then(async (res) => {
           //whether obtain the info, then call the mutation to auth the user in the ms
+
+          console.log("res:",res)
+          console.log("rest.data: ",res.data)
           const result = await handleLogin(res.data);
+          console.log("Result:",result)
           //Signin using the react hook with the user info
           signIn({
             token: access_token,
             expiresIn: 3600,
-            authState: result.data.loginUser,
+            authState: result?.data?.loginUser,
           });
           navigate("/home");
           // console.log(result.data.loginUser)
@@ -80,6 +84,7 @@ export function Login() {
           authStatus: true,
         },
       });
+      console.log('result desde handleLogin',result)
       return result;
     } catch (e) {
       return e;
